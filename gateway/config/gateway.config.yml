@@ -1,0 +1,131 @@
+http:
+    port: 8080
+admin:
+    port: 9876
+    host: localhost
+apiEndpoints:
+
+    status:
+        host: '*'
+        paths: [ '/status/*', '/status/api/*', '/status/uploads/*', /status/images/*]
+
+    homepage:
+        host: '*'
+        paths: [ '/', /homepage/*, '/homepage/images/*' ]
+
+    auth:
+        host: '*'
+        paths: [ '/auth/*', '/auth/api/*' ]
+
+    notfound:
+        host: '*'
+        paths: [ '/notfound/*' ]
+
+    dashboard:
+        host: '*'
+        paths: [ '/dashboard/*', '/dashboard/api/*', '/dashboard/uploads/*', '/dashboard/images/*']
+
+    user:
+        host: '*'
+        paths: [ '/user/*', '/user/api/*' ]
+
+    project:
+        host: '*'
+        paths: [ '/project/*', '/project/api/*' ]
+        
+serviceEndpoints:
+    
+    status:
+        url: 'http://localhost:3333'
+
+    homepage:
+        url: 'http://localhost:3001'
+        
+    auth:
+        url: 'http://localhost:3002'
+
+    notfound:
+        url: 'http://localhost:3003'
+
+    dashboard:
+        url: 'http://localhost:3004'
+    
+    user:
+        url: 'http://localhost:3005'
+    
+    project:
+        url: 'http://localhost:3006'
+
+policies:
+    - basic-auth
+    - cors
+    - expression
+    - key-auth
+    - log
+    - oauth2
+    - proxy
+    - rate-limit
+pipelines:
+ 
+    status:
+        apiEndpoints:
+            - status
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: status
+                    changeOrigin: true
+
+    homepage:
+        apiEndpoints:
+            - homepage
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: homepage
+                    changeOrigin: true
+
+    auth:
+        apiEndpoints:
+            - auth
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: auth
+                    changeOrigin: true
+
+    notfound:
+        apiEndpoints:
+            - notfound
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: notfound
+                    changeOrigin: true
+
+    dashboard:
+        apiEndpoints:
+            - dashboard
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: dashboard
+                    changeOrigin: true
+
+    user:
+        apiEndpoints:
+            - user
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: user
+                    changeOrigin: true
+
+    project:
+        apiEndpoints:
+            - project
+        policies:
+            - proxy:
+                - action:
+                    serviceEndpoint: project
+                    changeOrigin: true
