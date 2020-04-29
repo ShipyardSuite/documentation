@@ -2,8 +2,10 @@
 
 const fetch = require('node-fetch');
 
-module.exports = (app, serviceName) => {
+module.exports = (app, logger, serviceName) => {
 	app.get(`/${serviceName}/api/status`, (req, res) => {
-		res.json({ success: true, message: `Hello from service "${serviceName}"` });
+		res.status(200).json({ success: true, message: `Hello from service "${serviceName}"` });
+
+		res.end(logger.info(`Hello from service "${serviceName}"`, { status: res.statusCode }));
 	});
 };
